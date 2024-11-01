@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prison Escape Room</title>
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #333;
+            color: #e0e0e0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-image: radial-gradient(#555 1px, transparent 1px),
+                              radial-gradient(#555 1px, transparent 1px);
+            background-position: 0 0, 25px 25px;
+            background-size: 50px 50px;
+        }
+
+        /* Header resembling prison bars */
+        .header {
+            width: 100%;
+            padding: 20px;
+            text-align: center;
+            background-color: #222;
+            border-bottom: 5px solid #444;
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            color: #e0e0e0;
+            text-transform: uppercase;
+        }
+
+        /* Timer Style */
+        .timer {
+            font-size: 20px;
+            color: #ffcc00; /* Gold color for visibility */
+            margin-bottom: 20px;
+        }
+
+        /* Bar effect */
+        .bars {
+            display: flex;
+            justify-content: space-evenly;
+            margin-top: 10px;
+        }
+
+        .bars div {
+            height: 80px;
+            width: 5px;
+            background-color: #666;
+        }
+
+        /* Main content with cell style */
+        .main-content {
+            width: 80%;
+            max-width: 700px;
+            background-color: #222;
+            padding: 20px;
+            margin-top: 20px;
+            border: 5px solid #444;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6);
+        }
+
+        .main-content h2 {
+            font-size: 22px;
+            color: #bbb;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #555;
+            padding-bottom: 10px;
+        }
+
+        .cell-button {
+            background-color: #444;
+            color: #e0e0e0;
+            padding: 10px 20px;
+            margin: 10px;
+            font-size: 18px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            box-shadow: inset 0 0 5px #111;
+            text-transform: uppercase;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .cell-button:hover {
+            background-color: #555;
+            transform: scale(1.05);
+        }
+
+        .cell-row {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+
+        .cell-button:active {
+            box-shadow: inset 0 0 5px #000;
+        }
+
+        /* Footer with small barred window */
+        .footer {
+            width: 100%;
+            padding: 10px;
+            margin-top: 20px;
+            background-color: #222;
+            color: #888;
+            font-size: 14px;
+            text-align: center;
+            border-top: 5px solid #444;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.8); /* Black w/ opacity */
+            padding-top: 60px;
+            text-align: center;
+        }
+
+        /* Modal Content */
+        .modal-content {
+            background-color: #222;
+            margin: 5% auto; /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #444;
+            width: 80%; /* Could be more or less, depending on screen size */
+            max-width: 600px;
+            color: #e0e0e0;
+        }
+
+        /* Close Button */
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #fff;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Feedback message */
+        .feedback {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    Prison Escape Room
+    <div class="timer" id="timer">Time Left: 02:00</div> <!-- Timer Display -->
+    <div class="bars">
+        <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+    </div>
+</div>
+
+<div class="main-content">
+    <h2>Cell Block A</h2>
+    <p>Welcome to the prison! Your mission is to escape by solving the puzzles in each cell.</p>
+    
+    <div class="cell-row">
+        <button class="cell-button" onclick="openModal('modal1')">Cell 1</button>
+        <button class="cell-button" onclick="openModal('modal2')">Cell 2</button>
+        <button class="cell-button" onclick="openModal('modal3')">Cell 3</button>
+        <button class="cell-button" onclick="openModal('modal4')">Cell 4</button>
+    </div>
+</div>
+
+<!-- Modals for each cell -->
+<div id="modal1" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('modal1')">&times;</span>
+        <h2>Cell 1 Challenge:</h2>
+        <br>
+        <p>Solve this puzzle to escape Cell 1: What has keys but can't open locks?</p>
+    	<br>
+        <input placeholder="Type Answer Here" id="answer1" required="">
+        <button class="cell-button" id="submit1" onclick="checkAnswer('modal1', 'answer1', ['piano', 'keyboard', 'map', 'keypad'])">Submit</button>
+        <div class="feedback" id="feedback1"></div>
+    </div>
+</div>
+
+<div id="modal2" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('modal2')">&times;</span>
+        <h2>Cell 2 Challenge:</h2>
+        <br>
+        <p>Solve this puzzle to escape Cell 2: What is full of holes but still holds water?</p>
+        <br>
+        <input placeholder="Type Answer Here" id="answer2" required="">
+        <button class="cell-button" id="submit2" onclick="checkAnswer('modal2', 'answer2', ['sponge', 'body'])">Submit</button>
+        <div class="feedback" id="feedback2"></div>
+    </div>
+</div>
+
+<div id="modal3" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('modal3')">&times;</span>
+        <h2>Cell 3 Challenge:</h2>
+        <br>
+        <p>Solve this puzzle to escape Cell 3: What can travel around the world while staying in a corner?</p>
+        <br>
+        <input placeholder="Type Answer Here" id="answer3" required="">
+        <button class="cell-button" id="submit3" onclick="checkAnswer('modal3', 'answer3', ['stamp', 'map', 'rook'])">Submit</button>
+        <div class="feedback" id="feedback3"></div>
+    </div>
+</div>
+
+<div id="modal4" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('modal4')">&times;</span>
+        <h2>Cell 4 Challenge:</h2>
+        <br>
+        <p>Solve this puzzle to escape Cell 4: I have branches, but no fruit, trunk, or leaves. What am I?</p>
+        <br>
+        <input placeholder="Type Answer Here" id="answer4" required="">
+        <button class="cell-button" id="submit4" onclick="checkAnswer('modal4', 'answer4', ['bank', 'library', 'government', 'river'])">Submit</button>
+        <div class="feedback" id="feedback4"></div>
+    </div>
+</div>
+
+<div class="footer">
+    © 2024 Code-318 - Escape the prison before time runs out!
+</div>
+
+<script>
+    let timeLeft = 120; // Timer set for 120 seconds (2 minutes)
+    const timerDisplay = document.getElementById('timer');
+    let correctAnswers = 0; // Counter for correct answers
+    const totalQuestions = 4; // Total number of questions
+
+    // Timer function
+    function startTimer() {
+        const timerInterval = setInterval(() => {
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                alert("Time's up! You didn't escape in time.");
+                window.location.href = "https://code-318.github.io/Escape/Home.html"; // Redirect to specified URL
+            } else {
+                timeLeft--;
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                timerDisplay.innerText = `Time Left: ${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+            }
+        }, 1000);
+    }
+
+    // Start the timer when the page loads
+    window.onload = startTimer;
+
+    function openModal(modalId) {
+        document.getElementById(modalId).style.display = "block";
+    }
+
+    function closeModal(modalId) {
+        document.getElementById(modalId).style.display = "none";
+        // Clear feedback when closing modal
+        document.getElementById('feedback' + modalId.charAt(modalId.length - 1)).innerText = '';
+    }
+
+    // Close modal when clicking outside of it
+    window.onclick = function(event) {
+        if (event.target.classList.contains('modal')) {
+            closeModal(event.target.id);
+        }
+    }
+
+    function checkAnswer(modalId, answerId, correctAnswersList) {
+        const userAnswer = document.getElementById(answerId).value.trim().toLowerCase();
+        const feedbackElement = document.getElementById('feedback' + modalId.charAt(modalId.length - 1));
+        const submitButton = document.getElementById('submit' + modalId.charAt(modalId.length - 1));
+
+        if (feedbackElement.innerText === "") { // Only allow submission if feedback is empty
+            if (correctAnswersList.includes(userAnswer)) {
+                feedbackElement.innerText = "Correct! You've solved the puzzle!";
+                feedbackElement.style.color = "green";
+                correctAnswers++; // Increment correct answers counter
+                submitButton.disabled = true; // Disable submit button after correct answer
+
+                // Check if all answers have been answered correctly
+                if (correctAnswers === totalQuestions) {
+                    alert("Congratulations! You've escaped the prison!");
+                    window.location.href = "https://code-318.github.io/Escape/Home.html"; // Redirect to specified URL
+                }
+            } else {
+                feedbackElement.innerText = "Incorrect! Try again.";
+                feedbackElement.style.color = "red";
+            }
+        }
+    }
+</script>
+
+</body>
+</html>
