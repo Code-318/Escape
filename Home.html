@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Escape Room Challenge</title>
+    <style>
+        /* Basic reset and font settings */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-size: 18px;
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            background-image: radial-gradient(#ccc 1px, transparent 1px),
+                              radial-gradient(#ccc 1px, transparent 1px);
+            background-position: 0 0, 25px 25px;
+            background-size: 50px 50px;
+            padding: 20px;
+        }
+
+        .header {
+            background-color: #e1e1e1;
+            border-radius: 8px;
+            padding: 30px;
+            text-align: center;
+            display: none;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+            max-width: 600px;
+            margin: 0 auto;
+            color: #333;
+        }
+
+        .header h2 {
+            font-size: 24px;
+            margin-bottom: 8px;
+            color: #d9534f;
+        }
+
+        .header p {
+            font-size: 16px;
+            color: #666;
+        }
+
+        #navbar {
+            position: sticky;
+            top: 0;
+            overflow: hidden;
+            background-color: #333;
+            padding: 10px 0;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        #navbar a {
+            color: #f9f9f9;
+            padding: 12px 20px;
+            text-decoration: none;
+            font-size: 16px;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+
+        #navbar a:hover {
+            background-color: #575757;
+        }
+
+        #navbar a.active {
+            background-color: #d9534f;
+            color: white;
+        }
+
+        .button {
+            background-color: #d9534f;
+            border: none;
+            color: #fff;
+            padding: 12px 20px;
+            font-size: 16px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            cursor: pointer;
+            border-radius: 30px;
+            transition: background-color 0.3s ease, transform 0.2s;
+        }
+
+        .button:hover {
+            background-color: #c43c37;
+            transform: scale(1.05);
+        }
+
+        .close-button {
+            background-color: #aaa;
+            color: white;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 50%;
+            font-size: 14px;
+            cursor: pointer;
+            float: right;
+            transition: background-color 0.3s ease;
+        }
+
+        .close-button:hover {
+            background-color: #888;
+        }
+
+        #buttonId {
+            text-align: center;
+            padding-top: 40px;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="header" id="header">
+    <button class="close-button" id="closeButton">×</button>
+    <h2>Welcome to the Escape Room!</h2>
+    <p>Are you ready to test your wits and escape?</p>
+    <a href="https://code-318.github.io/Test/Prison.html">
+        <button class="button" id="confirm">Enter the Escape Room</button>
+    </a>
+</div>
+
+<div id="navbar">
+    <a class="active" href="javascript:void(0)">Home</a>
+    <a href="javascript:void(0)">Puzzles</a>
+    <a href="javascript:void(0)">Hints</a>
+    <a href="javascript:void(0)">Contact</a>
+</div>
+
+<div id="buttonId">
+    <button style="font-size: 20px; padding: 15px 30px;" class="button" onclick="showHeader()">Start Your Adventure!</button>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        function showHeader() {
+            var header = document.getElementById("header");
+            header.style.display = "block";
+        }
+
+        var closeButton = document.getElementById("closeButton");
+        closeButton.onclick = function() {
+            var header = document.getElementById("header");
+            header.style.display = "none";
+        }
+
+        var confirmButton = document.getElementById("confirm");
+        confirmButton.onclick = function() {
+            alert("Good luck escaping!");
+            var header = document.getElementById("header");
+            header.style.display = "none";  // Optionally hide the header after confirming
+        }
+
+        // Attach the showHeader function to the main button
+        document.querySelector("#buttonId button").onclick = showHeader;
+    });
+</script>
+
+</body>
+</html>
